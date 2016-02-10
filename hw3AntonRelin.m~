@@ -50,18 +50,6 @@ convsine2 = conv(sine2, [0.5, 0.5]);
 convsine2 = conv(convsine2, [0.5, -0.5]);
 
 convsine1 = convsine1(1:24);
-convsine2 = convsine2(1:24);
+
 figure(2)
 plot(1:24, sine1, 'r', 1:24, sine2, 'b', 1:24, convsine1, 'g', 1:24, convsine2, 'y')
-
-%% Question Seven
-
-%% Question Eight
-
-
-%% Section B
-%% Question One
-
-load('images1.mat');
-%imagesc(albert)
-testOut = conv2(albert, [0.25, 0.25, 0.25]);
