@@ -50,6 +50,42 @@ convsine2 = conv(sine2, [0.5, 0.5]);
 convsine2 = conv(convsine2, [0.5, -0.5]);
 
 convsine1 = convsine1(1:24);
-
+convsine2 = convsine2(1:24);
 figure(2)
 plot(1:24, sine1, 'r', 1:24, sine2, 'b', 1:24, convsine1, 'g', 1:24, convsine2, 'y')
+
+%% Question Seven
+
+%% Question Eight
+
+
+%% Section B
+%% Question One
+
+load('images1.mat');
+%imagesc(albert)
+horWeightedMean = conv2(albert, [0.25, 0.5, 0.25]);
+verWeightedMean = rot90(conv2(rot90(albert), [0.25,0.5,0.25]),3);
+% verticle could also be accomplished by transposing the kernel
+
+%% Question Two
+doubleConvolved = conv2(albert, [0.25, 0.5, 0.25]);
+doubleConvolved = rot90(conv2(rot90(doubleConvolved), [0.25, 0.5, 0.25]), 3);
+kernel = [0.25; 0.5; 0.25] * [0.25, 0.5, 0.25];
+testSame = conv2(albert, kernel);
+demonstrationSame = doubleConvolved == testSame;
+
+%% Question Three
+
+albert2 = albert - testSame(2:257,2:257);
+%imagesc(albert2)
+albert3 = conv2(albert, [-0.5]);
+imagesc(albert3)
+
+%% Question Four
+
+newAlbert = zeros(258, 258);
+for i=1:257
+    for x=1:257
+        if(albert2(i,x) * albert2(i,x+1) == -50)
+            newAlbert(i,x) = 1;
