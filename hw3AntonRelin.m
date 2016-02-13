@@ -15,8 +15,8 @@
 %% Question Two
 
 % a
-% this is not time invariant since it's not shifted
-% just on the time axis
+% This system could be time invariant - the displayed 
+% signal could be the same signal at a later time.
 
 % b
 % If it were time invariant, it would be
@@ -28,12 +28,18 @@ vector = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7
 vector1 = conv(vector, [0.5, 0.5]);
 vector2 = conv(vector, [0.5, -0.5]);
 vector3 = vector1+vector2;
+%The differencer effectively makes the increase in values
+%at the end appear more strongly.
 
 %% Question Four
 
 reduced = vector3(1:24);
 q4 = (reduced == vector);
-
+% This would reconstruct any signal
+% What adding the two convolutions does is 
+% cancel out the changes done by the -.5 and the .5
+% on the neighboring element, and add back the halves from
+% the original signal
 %% Question Five
 
 varTest = mksine(360,12,80,1);
@@ -56,8 +62,19 @@ plot(1:24, sineOne, 'r', 1:24, sineTwo, 'b', 1:24, convsine1, 'g', 1:24, convsin
 
 %% Question Seven
 
+start = zeros(3, 1);
+start(1,1) = 1;
+start(2,1) = 3;
+start(3,1) = 5;
+
+impulseTest = rand(7,1);
+responseTest = conv(start, impulseTest);
+
 %% Question Eight
 
+testConv = conv2(rand(7, 1), [0.5, -0.5]);
+% works if b is two dimensional or one, not sure how to generalize
+% b appears as a multiple of the sums that are being made
 
 %% Section B
 %% Question One

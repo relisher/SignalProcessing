@@ -15,8 +15,8 @@
 %% Question Two
 
 % a
-% this is not time invariant since it's not shifted
-% just on the time axis
+% This system could be time invariant - the displayed 
+% signal could be the same signal at a later time.
 
 % b
 % If it were time invariant, it would be
@@ -28,6 +28,7 @@ vector = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7
 vector1 = conv(vector, [0.5, 0.5]);
 vector2 = conv(vector, [0.5, -0.5]);
 vector3 = vector1+vector2;
+
 
 %% Question Four
 
@@ -42,22 +43,32 @@ varTest = mksine(360,12,80,1);
 
 %% Question Six
 
-sine1 = mksine(24, 24, 1, 1);
-sine2 = mksine(24, 4, 1, 1);
-convsine1 = conv(sine1, [0.5, 0.5]);
+sineOne = mksine(24, 24, 1, 1);
+sineTwo = mksine(24, 4, 1, 1);
+convsine1 = conv(sineOne, [0.5, 0.5]);
 convsine1 = conv(convsine1, [0.5, -0.5]);
-convsine2 = conv(sine2, [0.5, 0.5]);
+convsine2 = conv(sineTwo, [0.5, 0.5]);
 convsine2 = conv(convsine2, [0.5, -0.5]);
 
 convsine1 = convsine1(1:24);
 convsine2 = convsine2(1:24);
 figure(2)
-plot(1:24, sine1, 'r', 1:24, sine2, 'b', 1:24, convsine1, 'g', 1:24, convsine2, 'y')
+plot(1:24, sineOne, 'r', 1:24, sineTwo, 'b', 1:24, convsine1, 'g', 1:24, convsine2, 'y')
 
 %% Question Seven
 
+start = zeros(3, 1);
+start(1,1) = 1;
+start(2,1) = 3;
+start(3,1) = 5;
+
+impulseTest = rand(7,1);
+responseTest = conv(start, impulseTest);
+
 %% Question Eight
 
+testConv = conv2(rand(7, 1), [0.5, -0.5]);
+% works if b is two dimensional, not sure how to generalize
 
 %% Section B
 %% Question One
@@ -84,8 +95,23 @@ imagesc(albert3)
 
 %% Question Four
 
-newAlbert = zeros(258, 258);
-for i=1:257
-    for x=1:257
+newAlbert = zeros(256, 256);
+for i=1:255
+    for x=1:255
         if(albert2(i,x) * albert2(i,x+1) == -50)
             newAlbert(i,x) = 1;
+        end    
+        if(albert2(i,x) * albert2(i+1,x) == -50)
+            newAlbert(i,x) = 1;
+        end
+    end
+end
+%imagesc(newAlbert)
+% not sure what convolution would lead to this
+
+%% Question Five
+
+s3 = mksine2(25, 25, 3, 1, 1);
+figure(4);
+imagesc(s3, [-1 1])
+axis off; axis image;
